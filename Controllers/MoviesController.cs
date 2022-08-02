@@ -19,6 +19,26 @@ namespace csharp_boolflix.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> PlayCounter(int profileId, int movieId) 
+        {
+            Profile? profile = _context.Profiles.Find(profileId);
+            Movie? movie = _context.Movies.Find(movieId);
+
+            if(movie == null || profile == null)
+            {
+                return NotFound();
+            }
+
+            if (profile.VideoContents.Contains(movie))
+            {
+                return View("Index");
+            }
+
+            profile.VideoContents.Add(movie);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
         // GET: Movies
         public async Task<IActionResult> Index()
         {
