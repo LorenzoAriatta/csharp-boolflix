@@ -1,4 +1,5 @@
-﻿using csharp_boolflix.Models;
+﻿using csharp_boolflix.Data;
+using csharp_boolflix.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,13 +9,24 @@ namespace csharp_boolflix.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly BoolflixContext _db;
+
+        public HomeController(ILogger<HomeController> logger, BoolflixContext db)
         {
             _logger = logger;
+            _db = db;
         }
 
         public IActionResult Index()
         {
+            Random random = new Random();
+
+            int contents = _db.VideoContents.Count();
+
+            Movie movieRNG = (Movie)_db.VideoContents.Skip(random.Next(contents)).First();
+
+            ViewData["Jumbo"] = movieRNG;
+
             return View();
         }
 

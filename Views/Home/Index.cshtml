@@ -1,8 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+
+    Movie jumboMovie = ViewData["Jumbo"] as Movie;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="jumbo" class="d-flex row justify-content-center">
+    <div class="col-9 content-jumbo mr-5">
+        <h2 class="card-title">@jumboMovie.Title</h2>
+    </div>
+    <div class="col-2 cover-image ml-5">
+        <img id="jumbo-movie" src="@jumboMovie.CoverImage" alt="@jumboMovie.Title" />
+    </div>
 </div>
