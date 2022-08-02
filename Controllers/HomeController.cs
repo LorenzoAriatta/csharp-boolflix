@@ -1,6 +1,7 @@
 ﻿using csharp_boolflix.Data;
 using csharp_boolflix.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace csharp_boolflix.Controllers
@@ -23,11 +24,11 @@ namespace csharp_boolflix.Controllers
 
             int contents = _db.VideoContents.Count();
 
-            Movie movieRNG = (Movie)_db.VideoContents.Skip(random.Next(contents)).First();
+            Movie movieRNG = (Movie)_db.VideoContents.Skip(random.Next(contents)).Include("Profiles").First();
 
             ViewData["Jumbo"] = movieRNG;
 
-            return View();
+            return View(movieRNG);
         }
 
         public IActionResult Privacy()
